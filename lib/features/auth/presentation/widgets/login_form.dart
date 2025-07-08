@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
 class LoginForm extends StatefulWidget {
-  const LoginForm({super.key});
+  final Duration loginDelay;
+
+  const LoginForm({
+    super.key,
+    this.loginDelay = const Duration(seconds: 2), // default delay for production
+  });
 
   @override
   State<LoginForm> createState() => _LoginFormState();
@@ -17,7 +22,10 @@ class _LoginFormState extends State<LoginForm> {
   void _login() async {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
-      await Future.delayed(const Duration(seconds: 2));
+
+      // Use injected delay (test: Duration.zero, prod: 2 sec)
+      await Future.delayed(widget.loginDelay);
+
       if (mounted) {
         setState(() => _isLoading = false);
         Navigator.pushReplacementNamed(context, '/dashboard');
