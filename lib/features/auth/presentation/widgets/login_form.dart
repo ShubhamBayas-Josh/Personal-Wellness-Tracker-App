@@ -5,7 +5,7 @@ class LoginForm extends StatefulWidget {
 
   const LoginForm({
     super.key,
-    this.loginDelay = const Duration(seconds: 2), // default delay for production
+    this.loginDelay = const Duration(seconds: 2),
   });
 
   @override
@@ -23,7 +23,6 @@ class _LoginFormState extends State<LoginForm> {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
 
-      // Use injected delay (test: Duration.zero, prod: 2 sec)
       await Future.delayed(widget.loginDelay);
 
       if (mounted) {
@@ -103,7 +102,6 @@ class _LoginFormState extends State<LoginForm> {
                 ),
                 const SizedBox(height: 16),
 
-                // Welcome Text
                 Text(
                   "Welcome Back",
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
