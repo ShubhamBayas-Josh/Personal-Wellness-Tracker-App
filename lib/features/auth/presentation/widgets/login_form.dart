@@ -50,6 +50,9 @@ class _LoginFormState extends State<LoginForm> {
             !RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
           return 'Enter a valid email';
         }
+        if (hintText == "Password" && value.length < 6) {
+          return 'Password must be at least 6 characters';
+        }
         return null;
       },
       decoration: InputDecoration(

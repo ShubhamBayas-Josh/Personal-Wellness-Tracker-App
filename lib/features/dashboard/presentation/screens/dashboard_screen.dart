@@ -107,8 +107,32 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     icon: const Icon(Icons.logout),
                     tooltip: 'Logout',
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/');
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext dialogContext) {
+                          return AlertDialog(
+                            title: const Text('Confirm Logout'),
+                            content: const Text('Are you sure you want to Logout?'),
+                            actions: <Widget>[
+                              TextButton(
+                                child: const Text('Cancel'),
+                                onPressed: () {
+                                  Navigator.of(dialogContext).pop();
+                                },
+                              ),
+                              TextButton(
+                                child: const Text('Confirm'),
+                                onPressed: () {
+                                  Navigator.of(dialogContext).pop();
+                                  Navigator.pushReplacementNamed(context, '/');
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     },
+
                   ),
                 ],
               ),

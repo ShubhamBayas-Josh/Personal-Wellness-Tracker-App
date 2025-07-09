@@ -26,7 +26,7 @@ class _QuoteCardState extends State<QuoteCard> {
       });
     } catch (e) {
       setState(() {
-        _quote = '⚠️ Could not fetch quote. Try again later.';
+        _quote = 'Could not fetch quote. Try again later.';
         _isError = true;
       });
     }
