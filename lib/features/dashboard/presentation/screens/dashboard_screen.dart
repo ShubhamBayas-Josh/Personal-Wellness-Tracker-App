@@ -39,9 +39,34 @@ class _DashboardScreenState extends State<DashboardScreen> {
         Navigator.pushNamed(context, '/add');
         break;
       case 2:
-        Navigator.pushReplacementNamed(context, '/');
+        _showLogoutDialog();
         break;
     }
+  }
+
+  void _showLogoutDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: const Text('Confirm Logout'),
+          content: const Text('Are you sure you want to logout?'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () => Navigator.of(dialogContext).pop(),
+            ),
+            TextButton(
+              child: const Text('Confirm'),
+              onPressed: () {
+                Navigator.of(dialogContext).pop();
+                Navigator.pushReplacementNamed(context, '/');
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -99,40 +124,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ? null
                     : IconButton(
                   icon: const Icon(Icons.account_circle, size: 40),
-                  onPressed: () {
-                  },
+                  onPressed: () {},
                 ),
                 actions: [
                   IconButton(
                     icon: const Icon(Icons.logout),
                     tooltip: 'Logout',
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext dialogContext) {
-                          return AlertDialog(
-                            title: const Text('Confirm Logout'),
-                            content: const Text('Are you sure you want to Logout?'),
-                            actions: <Widget>[
-                              TextButton(
-                                child: const Text('Cancel'),
-                                onPressed: () {
-                                  Navigator.of(dialogContext).pop();
-                                },
-                              ),
-                              TextButton(
-                                child: const Text('Confirm'),
-                                onPressed: () {
-                                  Navigator.of(dialogContext).pop();
-                                  Navigator.pushReplacementNamed(context, '/');
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
-
+                    onPressed: _showLogoutDialog,
                   ),
                 ],
               ),
@@ -165,73 +163,87 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             children: [
                               // Left Panel
                               Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Hello, User 👋',
-                                      style: theme.textTheme.headlineSmall?.copyWith(
-                                        fontWeight: FontWeight.bold,
+                                child: SingleChildScrollView(
+                                  padding: const EdgeInsets.only(right: 12),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Hello, User 👋',
+                                        style: theme.textTheme.headlineSmall?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      '$formattedDate | $formattedTime',
-                                      style: theme.textTheme.bodyMedium,
-                                    ),
-                                    const SizedBox(height: 24),
-                                    const TaskList(),
-                                  ],
+                                      const SizedBox(height: 8),
+                                      Text(
+                                        '$formattedDate | $formattedTime',
+                                        style: theme.textTheme.bodyMedium,
+                                      ),
+                                      const SizedBox(height: 24),
+                                      const TaskList(),
+                                    ],
+                                  ),
                                 ),
                               ),
                               const SizedBox(width: 32),
                               // Right Panel
                               Expanded(
-                                child: Column(
-                                  children: [
-                                    const QuoteCard(),
-                                    const SizedBox(height: 24),
-                                    SizedBox(
-                                      width: double.infinity,
-                                      child: ElevatedButton.icon(
-                                        onPressed: () {
-                                          Navigator.pushNamed(context, '/add');
-                                        },
-                                        icon: const Icon(Icons.add),
-                                        label: const Text('Add Custom Activity'),
+                                child: SingleChildScrollView(
+                                  padding: const EdgeInsets.only(left: 12),
+                                  child: Column(
+                                    children: [
+                                      const QuoteCard(),
+                                      const SizedBox(height: 24),
+                                      SizedBox(
+                                        width: double.infinity,
+                                        child: ElevatedButton.icon(
+                                          onPressed: () {
+                                            Navigator.pushNamed(context, '/add');
+                                          },
+                                          icon: const Icon(Icons.add),
+                                          label: const Text('Add Custom Activity'),
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
                           )
-                              : ListView(
-                            children: [
-                              Text(
-                                'Hello, User 👋',
-                                style: theme.textTheme.headlineSmall?.copyWith(
-                                  fontWeight: FontWeight.bold,
+                              : SingleChildScrollView(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Hello, User 👋',
+                                  style: theme.textTheme.headlineSmall?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                '$formattedDate | $formattedTime',
-                                style: theme.textTheme.bodyMedium,
-                              ),
-                              const SizedBox(height: 24),
-                              const TaskList(),
-                              const SizedBox(height: 24),
-                              const QuoteCard(),
-                              const SizedBox(height: 24),
-                              ElevatedButton.icon(
-                                onPressed: () {
-                                  Navigator.pushNamed(context, '/add');
-                                },
-                                icon: const Icon(Icons.add),
-                                label: const Text('Add Custom Activity'),
-                              ),
-                            ],
+                                const SizedBox(height: 8),
+                                Text(
+                                  '$formattedDate | $formattedTime',
+                                  style: theme.textTheme.bodyMedium,
+                                ),
+                                const SizedBox(height: 24),
+                                const TaskList(),
+                                const SizedBox(height: 24),
+                                const QuoteCard(),
+                                const SizedBox(height: 24),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: ElevatedButton.icon(
+                                    onPressed: () {
+                                      Navigator.pushNamed(context, '/add');
+                                    },
+                                    icon: const Icon(Icons.add),
+                                    label: const Text('Add Custom Activity'),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
