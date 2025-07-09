@@ -34,67 +34,62 @@ class AddActivityScreen extends StatelessWidget {
           final double horizontalPadding = isWide ? 40 : 24;
           final double cardWidth = isWide ? 700 : constraints.maxWidth - 2 * horizontalPadding;
 
-          return Center(
-            child: Container(
-              width: cardWidth,
-              margin: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: 32),
-              padding: EdgeInsets.all(isWide ? 40 : 24),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [Colors.white, Colors.grey.shade50],
+          return SingleChildScrollView(
+            child: Center(
+              child: Container(
+                width: cardWidth,
+                margin: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: 32),
+                padding: EdgeInsets.all(isWide ? 40 : 24),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [Colors.white, Colors.grey.shade50],
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 20,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 20,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // Header Icon
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: colorScheme.primary.withOpacity(0.1),
-                      shape: BoxShape.circle,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: colorScheme.primary.withOpacity(0.1),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.add_task,
+                        size: 40,
+                        color: colorScheme.primary,
+                      ),
                     ),
-                    child: Icon(
-                      Icons.add_task,
-                      size: 40,
-                      color: colorScheme.primary,
+                    const SizedBox(height: 24),
+                    Text(
+                      'Create New Activity',
+                      style: textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black87,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 24),
-
-                  // Title
-                  Text(
-                    'Create New Activity',
-                    style: textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black87,
+                    const SizedBox(height: 8),
+                    Text(
+                      'Fill in the details below to add a new wellness activity',
+                      textAlign: TextAlign.center,
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: Colors.grey.shade600,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-
-                  // Subtitle
-                  Text(
-                    'Fill in the details below to add a new wellness activity',
-                    textAlign: TextAlign.center,
-                    style: textTheme.bodyMedium?.copyWith(
-                      color: Colors.grey.shade600,
-                    ),
-                  ),
-                  const SizedBox(height: 32),
-
-                  // Form
-                  const ActivityForm(),
-                ],
+                    const SizedBox(height: 32),
+                    const ActivityForm(),
+                  ],
+                ),
               ),
             ),
           );
